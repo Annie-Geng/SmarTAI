@@ -195,7 +195,7 @@ def analyze_submissions(
 
     # Use ThreadPoolExecutor to process files in parallel
     # Limit the number of workers to avoid overwhelming the system
-    max_workers = min(len(files_data), 16)  # Process up to 16 files in parallel
+    max_workers = min(len(files_data), 36)  # Process up to 16 files in parallel
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
         # Submit all file processing tasks
         future_to_file = {

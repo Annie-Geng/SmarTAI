@@ -80,7 +80,7 @@ def prepare_calc_prompt(template_path: str, problem: str, student_answer: str, c
     return prompt
 
 
-def prepare_proof_prompt(template_path: str, steps: List[Dict[str, Any]], rubric: str) -> str:
+def prepare_proof_prompt(template_path: str, problem: str, steps: List[Dict[str, Any]], rubric: str) -> str:
     """
     Prepare a prompt for proof question grading.
     
@@ -98,6 +98,7 @@ def prepare_proof_prompt(template_path: str, steps: List[Dict[str, Any]], rubric
     steps_str = "\n".join([f"步骤{i+1}: {step['content']}" for i, step in enumerate(steps)])
     prompt = template.replace("{steps}", steps_str)
     prompt = prompt.replace("{rubric}", rubric)
+    prompt = prompt.replace("{problem}", problem)
     
     return prompt
 

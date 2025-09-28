@@ -10,15 +10,10 @@ from typing import Dict, Any
 
 from models import Correction, StepScore
 from correct.prompt_utils import prepare_concept_prompt
-from dependencies import get_llm
+from dependencies import *
 
 # Setup logger
 logger = structlog.get_logger()
-
-# Zhipu AI configuration
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "8dcdf3e9238f48f4ae329f638e66dfe2.HHIbfrj5M4GcjM8f")
-OPENAI_API_BASE = os.getenv("OPENAI_API_BASE", "https://open.bigmodel.cn/api/paas/v4")
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "glm-4")
 
 # Global LLM client for connection pooling
 LLM_CLIENT = None
@@ -172,8 +167,9 @@ def concept_node(answer_unit: Dict[str, Any], rubric: str, max_score: float = 10
     # Step 2: Prepare prompt using the new prompt_utils module
     try:
         template_path = "prompts/concept.txt"
-        context = keywords
-        problem = "概念题"  # Mock problem statement
+        # context = keywords
+        context = "暂无标准知识点，请你根据题目自行提取知识点！"
+        problem = answer_unit.get("stem", "概念题")  # Mock problem statement
         answer = answer_unit.get("text", "")
         
         prompt = prepare_concept_prompt(template_path, context, problem, answer, rubric)
@@ -209,8 +205,8 @@ def concept_node(answer_unit: Dict[str, Any], rubric: str, max_score: float = 10
                     if retry_count >= max_retries:
                         raise  # Re-raise the exception if all retries failed
                     # Wait a bit before retrying
-                    import time
-                    time.sleep(2)  # Increased delay to reduce API load
+                    # import time
+                    # time.sleep(2)  # Increased delay to reduce API load
             else:
                 # This should not happen, but just in case
                 raise Exception("LLM call failed after all retries")
@@ -344,8 +340,8 @@ def concept_node(answer_unit: Dict[str, Any], rubric: str, max_score: float = 10
                     if retry_count >= max_retries:
                         raise  # Re-raise the exception if all retries failed
                     # Wait a bit before retrying
-                    import time
-                    time.sleep(2)  # Increased delay to reduce API load
+                    # import time
+                    # time.sleep(2)  # Increased delay to reduce API load
             else:
                 # This should not happen, but just in case
                 raise Exception("Fallback LLM call failed after all retries")

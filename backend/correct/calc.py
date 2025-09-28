@@ -11,15 +11,10 @@ from pydantic import BaseModel
 
 from models import Correction, StepScore
 from correct.prompt_utils import prepare_calc_prompt
-from dependencies import get_llm
+from dependencies import *
 
 # Setup logger
 logger = structlog.get_logger()
-
-# Zhipu AI configuration
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "8dcdf3e9238f48f4ae329f638e66dfe2.HHIbfrj5M4GcjM8f")
-OPENAI_API_BASE = os.getenv("OPENAI_API_BASE", "https://open.bigmodel.cn/api/paas/v4")
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "glm-4")
 
 # Global LLM client for connection pooling
 LLM_CLIENT = None
@@ -34,7 +29,9 @@ def get_llm_client():
 class AnswerUnit(BaseModel):
     """Model for calculation answer unit."""
     q_id: str
+    stem: str
     text: str
+    correct_ans: str
     steps: List[Dict[str, Any]]
 
 def parse_llm_json_response(response_text: str) -> Dict[str, Any]:
@@ -174,8 +171,8 @@ def calc_node(answer_unit: Dict[str, Any], rubric: str, max_score: float = 10.0,
         student_answer = answer_unit_model.text
         # For now, we use the student answer as both problem and correct_answer since we don't have the correct answer
         # In a real implementation, you would get the correct answer from the problem store
-        problem = answer_unit_model.text
-        correct_answer = answer_unit_model.text
+        problem = answer_unit_model.stem
+        correct_answer = answer_unit_model.correct_ans
         prompt = prepare_calc_prompt(template_path, problem, student_answer, correct_answer, rubric)
         
         # In a real implementation, you would call an LLM with this prompt
@@ -209,8 +206,8 @@ def calc_node(answer_unit: Dict[str, Any], rubric: str, max_score: float = 10.0,
                     if retry_count >= max_retries:
                         raise  # Re-raise the exception if all retries failed
                     # Wait a bit before retrying
-                    import time
-                    time.sleep(2)  # Increased delay to reduce API load
+                    # import time
+                    # time.sleep(2)  # Increased delay to reduce API load
             else:
                 # This should not happen, but just in case
                 raise Exception("LLM call failed after all retries")

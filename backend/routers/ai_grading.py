@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from functools import lru_cache
 
-from dependencies import get_problem_store, get_student_store
+from dependencies import *
 from models import Correction
 from correct.calc import calc_node
 from correct.concept import concept_node
@@ -55,9 +55,6 @@ def get_cached_llm():
         # Import here to avoid circular imports
         from langchain_openai import ChatOpenAI
         import os
-        OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "66ea05a8d4484dbd98063dbde387149d.pCG80vNPAyKrdmBq")
-        OPENAI_API_BASE = os.getenv("OPENAI_API_BASE", "https://open.bigmodel.cn/api/paas/v4")
-        OPENAI_MODEL = os.getenv("OPENAI_MODEL", "glm-4-plus")
         
         LLM_CLIENT_CACHE[thread_id] = ChatOpenAI(
             model=OPENAI_MODEL,
@@ -96,7 +93,9 @@ def process_student_answer(answer: Dict[str, Any], problem_store: Dict[str, Any]
     # Prepare answer unit based on type
     answer_unit = {
         "q_id": q_id,
-        "text": content
+        "stem" :problem.get("stem", ""),
+        "text": content,
+        "correct_ans": "未提供，请你自行分析题目给出标答！"
     }
     
     # Map Chinese question types to internal English types for processing
@@ -171,6 +170,7 @@ def process_student_answer(answer: Dict[str, Any], problem_store: Dict[str, Any]
 def process_student_submission(student: Dict[str, Any], problem_store: Dict[str, Any]) -> Dict[str, Any]:
     """Process all answers for a single student and return the results."""
     student_id = student.get("stu_id")
+    student_name = student.get("stu_name")
     if not student_id:
         return None
         
@@ -180,7 +180,7 @@ def process_student_submission(student: Dict[str, Any], problem_store: Dict[str,
     student_answers = student.get("stu_ans", [])
     
     # Use ThreadPoolExecutor to process answers in parallel for each student
-    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor: # Increased workers slightly
+    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor: # Increased workers slightly
         future_to_answer = {
             executor.submit(process_student_answer, answer, problem_store): answer 
             for answer in student_answers
@@ -209,6 +209,7 @@ def process_student_submission(student: Dict[str, Any], problem_store: Dict[str,
     logger.info(f"Completed processing for student {student_id}")
     return {
         "student_id": student_id,
+        "student_name": student_name,
         "corrections": corrections
     }
 
@@ -236,6 +237,7 @@ def run_grading_task(job_id: str, student_id: str, problem_store: Dict, student_
         GRADING_RESULTS[job_id] = {
             "status": "completed",
             "student_id": student_id,
+            "student_name": student_data.get("stu_name", "未知姓名"),
             "corrections": result.get("corrections", [])
         }
         
@@ -260,7 +262,7 @@ def run_batch_grading_task(job_id: str, problem_store: Dict, student_store: Dict
         all_results = []
         
         # Increased max_workers for better parallelization across students
-        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
             # MODIFICATION: Iterate over dictionary values() instead of the list itself.
             future_to_student = {
                 executor.submit(process_student_submission, student, problem_store): student 

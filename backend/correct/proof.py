@@ -11,15 +11,10 @@ from pydantic import BaseModel
 
 from models import Correction, StepScore
 from correct.prompt_utils import prepare_proof_prompt
-from dependencies import get_llm
+from dependencies import *
 
 # Setup logger
 logger = structlog.get_logger()
-
-# Zhipu AI configuration
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "8dcdf3e9238f48f4ae329f638e66dfe2.HHIbfrj5M4GcjM8f")
-OPENAI_API_BASE = os.getenv("OPENAI_API_BASE", "https://open.bigmodel.cn/api/paas/v4")
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "glm-4")
 
 # Global LLM client for connection pooling
 LLM_CLIENT = None
@@ -39,7 +34,9 @@ class ProofStep(BaseModel):
 class AnswerUnit(BaseModel):
     """Model for proof answer unit."""
     q_id: str
+    stem: str
     text: str
+    correct_ans: str
     steps: List[ProofStep]
 
 def parse_llm_json_response(response_text: str) -> Dict[str, Any]:
@@ -208,7 +205,8 @@ def proof_node(answer_unit: Dict[str, Any], rubric: str, max_score: float = 10.0
     # Step 4: Prepare prompt using the new prompt_utils module
     try:
         template_path = "prompts/proof.txt"
-        prompt = prepare_proof_prompt(template_path, [step.model_dump() for step in steps], rubric)
+        problem = answer_unit.get("stem", "证明题")
+        prompt = prepare_proof_prompt(template_path, problem, [step.model_dump() for step in steps], rubric)
         
         # In a real implementation, you would call an LLM with this prompt
         # For now, we'll just log that we would use it
