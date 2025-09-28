@@ -245,7 +245,7 @@ def remove_file_from_kb(kb_id: str, file_id: str):
 
 def render_header():
     """渲染页面头部"""
-    col1, col2, col3 = st.columns([2, 3, 2])
+    col1, col2, col3 = st.columns([2, 16, 2])
     
     with col1:
         if st.button("🏠 返回首页", type="secondary"):
@@ -256,7 +256,7 @@ def render_header():
                    unsafe_allow_html=True)
     
     with col3:
-        if st.button("🔄 刷新数据", type="primary"):
+        if st.button("🔄 刷新数据", type="secondary"):
             st.session_state.knowledge_bases = load_knowledge_base_config()
             st.success("数据已刷新！")
             st.rerun()
@@ -284,7 +284,7 @@ def render_knowledge_base_overview():
     
     with col1:
         st.markdown(f"""
-        <div style="text-align: center; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 4px solid #1E3A8A;">
+        <div style="text-align: center; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 8px solid #1E3A8A;">
             <h1 style="color: #1E3A8A; margin: 0; font-size: 3rem;">{total_kbs}</h1>
             <p style="margin: 0.5rem 0 0 0; color: #64748B; font-weight: 600;">知识库总数</p>
         </div>
@@ -292,7 +292,7 @@ def render_knowledge_base_overview():
     
     with col2:
         st.markdown(f"""
-        <div style="text-align: center; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 4px solid #10B981;">
+        <div style="text-align: center; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 8px solid #10B981;">
             <h1 style="color: #10B981; margin: 0; font-size: 3rem;">{total_files}</h1>
             <p style="margin: 0.5rem 0 0 0; color: #64748B; font-weight: 600;">文件总数</p>
         </div>
@@ -300,8 +300,8 @@ def render_knowledge_base_overview():
     
     with col3:
         st.markdown(f"""
-        <div style="text-align: center; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 4px solid #F59E0B;">
-            <h1 style="color: #F59E0B; margin: 0; font-size: 2rem;">{format_size(total_size)}</h1>
+        <div style="text-align: center; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 8px solid #F59E0B;">
+            <h1 style="color: #F59E0B; margin: 0; font-size: 3rem;">{format_size(total_size)}</h1>
             <p style="margin: 0.5rem 0 0 0; color: #64748B; font-weight: 600;">存储空间</p>
         </div>
         """, unsafe_allow_html=True)
@@ -309,7 +309,7 @@ def render_knowledge_base_overview():
     with col4:
         categories = set(kb.get("category", "通用") for kb in kbs.values())
         st.markdown(f"""
-        <div style="text-align: center; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 4px solid #8B5CF6;">
+        <div style="text-align: center; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 8px solid #8B5CF6;">
             <h1 style="color: #8B5CF6; margin: 0; font-size: 3rem;">{len(categories)}</h1>
             <p style="margin: 0.5rem 0 0 0; color: #64748B; font-weight: 600;">分类数量</p>
         </div>
@@ -439,7 +439,7 @@ def render_knowledge_base_list():
             category_color = category_colors.get(category, "#6B7280")
             
             st.markdown(f"""
-            <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 1rem 0; border-left: 4px solid {category_color};">
+            <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 1rem 0; border-left: 8px solid {category_color};">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
                     <div style="flex: 1;">
                         <h3 style="color: #1E3A8A; margin: 0 0 0.5rem 0; font-size: 1.25rem;">📚 {kb_info['name']}</h3>
@@ -464,7 +464,7 @@ def render_knowledge_base_list():
             col1, col2, col3, col4, col5 = st.columns(5)
             
             with col1:
-                if st.button("📂 管理文件", key=f"manage_{kb_id}", use_container_width=True, type="primary"):
+                if st.button("📂 管理文件", key=f"manage_{kb_id}", use_container_width=True, type="secondary"):
                     st.session_state.selected_kb = kb_id
                     st.session_state.show_file_management = True
                     st.rerun()
@@ -701,7 +701,7 @@ def render_file_management_modal():
                     file_icon = type_icons.get(file_info.get("type", ""), "📄")
                     
                     st.markdown(f"""
-                    <div style="background: #F8FAFC; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; border-left: 3px solid #3B82F6;">
+                    <div style="background: #F8FAFC; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; border-left: 8px solid #3B82F6;">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
                                 <span style="font-size: 1.2rem; margin-right: 0.5rem;">{file_icon}</span>

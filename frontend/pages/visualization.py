@@ -159,7 +159,7 @@ def render_statistics_overview(students: List[StudentScore], assignment_stats: A
     
     with col1:
         st.markdown(f"""
-        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; border-top: 4px solid #1E3A8A;">
+        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; border-top: 8px solid #dee7ff;">
             <div style="font-size: 2.5rem; font-weight: 700; color: #1E3A8A; margin-bottom: 0.25rem;">{len(students)}</div>
             <div style="font-size: 0.875rem; color: #64748B; text-transform: uppercase; font-weight: 600;">提交人数</div>
         </div>
@@ -167,7 +167,7 @@ def render_statistics_overview(students: List[StudentScore], assignment_stats: A
     
     with col2:
         st.markdown(f"""
-        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; border-top: 4px solid #1E3A8A;">
+        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; border-top: 8px solid #dee7ff;">
             <div style="font-size: 2.5rem; font-weight: 700; color: #1E3A8A; margin-bottom: 0.25rem;">{avg_score:.1f}</div>
             <div style="font-size: 0.875rem; color: #64748B; text-transform: uppercase; font-weight: 600;">平均分</div>
         </div>
@@ -175,7 +175,7 @@ def render_statistics_overview(students: List[StudentScore], assignment_stats: A
     
     with col3:
         st.markdown(f"""
-        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; border-top: 4px solid #1E3A8A;">
+        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; border-top: 8px solid #dee7ff;">
             <div style="font-size: 2.5rem; font-weight: 700; color: #1E3A8A; margin-bottom: 0.25rem;">{median_score:.1f}</div>
             <div style="font-size: 0.875rem; color: #64748B; text-transform: uppercase; font-weight: 600;">中位数</div>
         </div>
@@ -183,7 +183,7 @@ def render_statistics_overview(students: List[StudentScore], assignment_stats: A
     
     with col4:
         st.markdown(f"""
-        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; border-top: 4px solid #1E3A8A;">
+        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; border-top: 8px solid #dee7ff;">
             <div style="font-size: 2.5rem; font-weight: 700; color: #1E3A8A; margin-bottom: 0.25rem;">{max_score:.1f}</div>
             <div style="font-size: 0.875rem; color: #64748B; text-transform: uppercase; font-weight: 600;">最高分</div>
         </div>
@@ -191,7 +191,7 @@ def render_statistics_overview(students: List[StudentScore], assignment_stats: A
     
     with col5:
         st.markdown(f"""
-        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; border-top: 4px solid #1E3A8A;">
+        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; border-top: 8px solid #dee7ff;">
             <div style="font-size: 2.5rem; font-weight: 700; color: #1E3A8A; margin-bottom: 0.25rem;">{min_score:.1f}</div>
             <div style="font-size: 0.875rem; color: #64748B; text-transform: uppercase; font-weight: 600;">最低分</div>
         </div>
@@ -199,7 +199,7 @@ def render_statistics_overview(students: List[StudentScore], assignment_stats: A
     
     with col6:
         st.markdown(f"""
-        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; border-top: 4px solid #1E3A8A;">
+        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; border-top: 8px solid #dee7ff;">
             <div style="font-size: 2.5rem; font-weight: 700; color: #1E3A8A; margin-bottom: 0.25rem;">{pass_rate:.1f}%</div>
             <div style="font-size: 0.875rem; color: #64748B; text-transform: uppercase; font-weight: 600;">及格率</div>
         </div>
@@ -339,7 +339,7 @@ def render_weakness_analysis(question_analysis: List[QuestionAnalysis]):
         for i, question in enumerate(low_correct_questions[:5], 1):  # Top 5
             error_color = "#EF4444" if question.correct_rate < 0.4 else "#F59E0B"
             st.markdown(f"""
-            <div style="background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin: 0.5rem 0; border-left: 4px solid {error_color};">
+            <div style="background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin: 0.5rem 0; border-left: 8px solid {error_color};">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h4 style="color: #1E3A8A; margin: 0;">{i}. 题目 {question.question_id} ({question.question_type})</h4>
                     <span style="font-size: 1.2rem; font-weight: bold; color: {error_color};">{question.correct_rate:.1%}</span>

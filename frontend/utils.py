@@ -6,7 +6,8 @@ import requests
 import os
 KNOWLEDGE_BASE_DIR = "knowledge_bases"
 KNOWLEDGE_BASE_CONFIG = "knowledge_base_config.json"
-UTILS_BACKEND_URL = "https://smartai-backend-zefh.onrender.com" # render部署
+# UTILS_BACKEND_URL = "https://smartai-backend-zefh.onrender.com" # render部署
+UTILS_BACKEND_URL = "https://smartai-production.up.railway.app/" # railway部署
 # UTILS_BACKEND_URL = "http://localhost:8000" # 本地测试
 
 def load_knowledge_base_config():
@@ -147,7 +148,7 @@ def get_master_poller_html(jobs_json: str, backend_url: str) -> str:
                             // --- 核心修改：生成用户友好的弹窗消息 ---
                             const taskName = taskDetails.name || "未命名任务";
                             const submittedAt = taskDetails.submitted_at || "未知时间";
-                            alert(`您于 [${{submittedAt}}] 提交的任务："${{taskName}}"已成功完成！\\n请前往“历史批改记录”-“批改结果”查看，或直接查看[报告]和[分析]。\\n如果您当前正在AI批改结果总览窗口，请手动点击右上角“刷新数据”按钮以查看最新批改数据！`);
+                            alert(`您于 [${{submittedAt}}] 提交的任务："${{taskName}}"已成功完成！\\n请前往“历史批改记录”-“批改结果”查看，或直接查看[报告]和[分析]。\\n如果您当前正在AI批改结果总览窗口，请手动点击“📊批改结果”按钮以查看最新批改数据！`);
                             // 标记为完成，防止重复弹窗
                             sessionStorage.setItem(completedKey, 'true');
                             // --- 新增功能：刷新当前页面 ---

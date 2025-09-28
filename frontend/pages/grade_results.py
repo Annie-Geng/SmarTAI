@@ -22,7 +22,7 @@ load_custom_css()
 
 def render_header():
     """渲染页面头部"""
-    col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+    col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
     col = st.columns(1)[0]
 
     with col1:
@@ -46,10 +46,6 @@ def render_header():
     with col7:
         st.page_link("pages/visualization.py", label="成绩分析", icon="📈")
 
-    with col8:
-        if st.button("🔄 刷新数据", use_container_width=False):
-            st.rerun()
-    
     with col:
         st.markdown("<h1 style='text-align: center; color: #000000;'>📊 AI批改结果总览</h1>", 
                    unsafe_allow_html=True)
@@ -247,9 +243,10 @@ else:
                         all_results.sort(key=lambda s: s['student_id'])
                         for student_result in all_results:
                             student_id = student_result["student_id"]
+                            student_name = student_result["student_name"]
                             corrections = student_result["corrections"]
                             corrections.sort(key=lambda c: natural_sort_key(c['q_id']))
-                            st.markdown(f"### 学生: {student_id}")
+                            st.markdown(f"### 学生: {student_name} ({student_id})")
                             data = []
                             total_score = 0
                             total_max_score = 0

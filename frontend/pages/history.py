@@ -249,7 +249,7 @@ def render_completed_records():
     for job_id, record in sorted_records_list:
         with st.container():
             st.markdown(f"""
-            <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 1rem 0; border-left: 4px solid #10B981;">
+            <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 1rem 0; border-left: 8px solid #10B981;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
                         <h3 style="color: #1E3A8A; margin: 0 0 0.5rem 0;">✅ {record['task_name']}</h3>
@@ -395,7 +395,7 @@ def render_statistics_overview():
     
     with col1:
         st.markdown(f"""
-        <div style="text-align: center; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 4px solid #1E3A8A;">
+        <div style="text-align: center; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 8px solid #1E3A8A;">
             <h1 style="color: #1E3A8A; margin: 0; font-size: 3rem;">{total_records}</h1>
             <p style="margin: 0.5rem 0 0 0; color: #64748B; font-weight: 600;">总记录数</p>
         </div>
@@ -403,7 +403,7 @@ def render_statistics_overview():
     
     with col2:
         st.markdown(f"""
-        <div style="text-align: center; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 4px solid #10B981;">
+        <div style="text-align: center; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 8px solid #10B981;">
             <h1 style="color: #10B981; margin: 0; font-size: 3rem;">{completed_count}</h1>
             <p style="margin: 0.5rem 0 0 0; color: #64748B; font-weight: 600;">已完成</p>
         </div>
@@ -412,7 +412,7 @@ def render_statistics_overview():
     with col3:
         completion_rate = 100.0 if total_records > 0 else 0
         st.markdown(f"""
-        <div style="text-align: center; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 4px solid #8B5CF6;">
+        <div style="text-align: center; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 8px solid #8B5CF6;">
             <h1 style="color: #8B5CF6; margin: 0; font-size: 3rem;">{completion_rate:.1f}%</h1>
             <p style="margin: 0.5rem 0 0 0; color: #64748B; font-weight: 600;">完成率</p>
         </div>
@@ -429,7 +429,7 @@ def main():
     init_storage_state()
     
     render_header()
-    st.markdown("---")
+    # st.markdown("---")
     
     render_tabs()
     
