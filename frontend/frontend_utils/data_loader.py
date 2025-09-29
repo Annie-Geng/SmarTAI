@@ -195,6 +195,7 @@ def load_ai_grading_data(job_id: str) -> Dict[str, Any]:
             
             for student_result in result["results"]:
                 student_id = student_result["student_id"]
+                student_name = student_result["student_name"]
                 corrections = student_result["corrections"]
                 all_corrections.extend(corrections)
                 
@@ -240,7 +241,7 @@ def load_ai_grading_data(job_id: str) -> Dict[str, Any]:
                 # 创建StudentScore对象
                 student_score = StudentScore(
                     student_id=student_id,
-                    student_name=f"学生{student_id}",  # 实际应用中应从学生数据获取真实姓名
+                    student_name=student_name,
                     total_score=total_score,
                     max_score=max_score,
                     submit_time=datetime.now(),
