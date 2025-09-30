@@ -160,7 +160,7 @@ def main():
     with col2:
         st.markdown("#### ⚙️ 配置检查")
         if "smartai" in backend_url.lower():
-            st.success("✅ 后端 URL 似乎已为 Render 部署正确配置")
+            st.success("✅ 后端 URL 已为 Railway 部署正确配置")
         elif "localhost" in backend_url:
             st.info("ℹ️ 后端已配置为本地开发模式")
         else:
