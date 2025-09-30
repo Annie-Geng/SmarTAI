@@ -284,7 +284,7 @@ else:
                 # --- 改动 5: 优化 'pending' 状态的处理 ---
                 # 当任务正在等待时，明确提示用户，并按要求展示模拟数据作为预览。
                 elif status == "pending":
-                    st.info("批改任务正在进行中...下方为模拟数据预览，待任务完成后请点击右上角“刷新数据”按钮。")
+                    st.info("批改任务正在进行中...下方为模拟数据预览，耐心等待1-3分钟后可以再次点击“📊批改结果”按钮或者重新在下拉框选择本次批改以刷新查看是否批改完成。")
                     try:
                         from frontend_utils.data_loader import load_mock_data
                         mock_data = load_mock_data()
