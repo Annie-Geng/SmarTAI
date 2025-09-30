@@ -180,9 +180,8 @@ def main():
     3. 确保后端的 FRONTEND_URLS 环境变量包含了您的前端 URL
     4. 检查是否存在防火墙或网络限制
     
-    **对于 Render 部署：**
-    - 后端 URL 格式应为： `https://your-app-name.onrender.com`
-    - 前端 URL 应被添加到 Render 上的 FRONTEND_URLS 环境变量中
+    **对于 Railway 部署：**
+    - 后端 URL 格式应为： `https://smartai-production-backend.up.railway.app/`
     """)
 
 if __name__ == "__main__":
