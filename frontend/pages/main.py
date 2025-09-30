@@ -149,7 +149,7 @@ def render_user_welcome():
         st.markdown(f"""
         ### 📅 今日信息
         **日期:** {current_time.strftime('%Y年%m月%d日 ')}
-        **时间:** {current_time.strftime('%H:%M')}
+        **UTC时间:** {current_time.strftime('%H:%M')}
         """, unsafe_allow_html=True)
     
     with col3:
